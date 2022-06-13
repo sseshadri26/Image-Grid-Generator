@@ -1,0 +1,62 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Image Grid Organizer</title>
+		<script src="imageGrid.js"></script>
+		<script src="srcURLs.js"></script>
+	</head>
+	<body>
+		<canvas width="800" height="600" style="border:1px solid;"></canvas>
+		<form>
+			<fieldset>
+				<legend>Image Info:</legend>
+				Image Width: <input type="number" id="widthIn" /><br />
+				Image Height: <input type="number" id="heightIn" /><br />
+			</fieldset>
+			<fieldset>
+				<legend>Scale Options:</legend>
+				Scale Image Width To: <input type="number" id="scaleWidthIn" /><br />
+				Scale Image Height To: <input type="number" id="scaleHeightIn" /><br />
+			</fieldset>
+			<fieldset>
+				<legend>Configure Grid:</legend>
+				Rows: <input type="number" id="rowsIn" /><br />
+				Columns: <input type="number" id="colsIn" /><br />
+			</fieldset>
+			<input type="reset" value="Reset" />
+			<button type="button" onclick="getInputs()">Create</button>
+			<button type="button" onclick="exp()">Export</button>
+		</form>
+	</body>
+	<script>
+let c = document.querySelector("canvas");
+let f = c.getContext("2d");
+
+let inputs = [];
+
+loadImages()
+
+function getInputs(){
+	let ids = ["widthIn", "heightIn", "scaleWidthIn", "scaleHeightIn", "rowsIn", "colsIn"];
+	for(let id of ids){
+		inputs.push(parseInt(document.getElementById(id).value));
+	}
+	main(inputs);
+}
+
+function exp(){
+	let w = inputs[2]*inputs[5];
+	let h = inputs[3]*inputs[4];
+	c.width = w;
+	c.height = h;
+	alert('Right click the canvas');
+}
+
+function main(inputs){
+	grid = createGrid(inputs[4], inputs[5]);
+	drawGrid(grid, inputs[2], inputs[3]);
+	let loop = setInterval(render, 30, inputs[2], inputs[3]);
+}
+
+	</script>
+</html>
